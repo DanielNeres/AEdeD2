@@ -20,7 +20,7 @@ struct Info criarInfo(int mat, char *nome, int turma, float nota);
 struct Node* criarNode(struct Info info);
 int comparar(struct Info a, struct Info b);
 struct Node *inserir(struct Node *raiz, struct Info info);
-void percorrer_arvores_preordem(struct Node *raiz);
+void percorrer_arvores_preordem(struct Node *raiz, int profundidade);
 
 int main(){
 
@@ -55,7 +55,7 @@ int main(){
     for(index = 0; index < quantidade; index++){
         raiz = inserir(raiz, informacao[index]);
     }
-    percorrer_arvores_preordem(raiz);
+    percorrer_arvores_preordem(raiz, 0);
 }
 
 struct Info criarInfo(int mat, char *nome, int turma, float nota){
@@ -92,17 +92,17 @@ struct Node *inserir(struct Node *raiz, struct Info info){
     return raiz;
 }
 
-void percorrer_arvores_preordem(struct Node *raiz){
+void percorrer_arvores_preordem(struct Node *raiz, int profundidade){
 
     if(raiz == NULL){
         return;
     }
     printf("Nome: %s, Mat: %d, Turma: %d, Nota: %.2f\n", raiz->info.nome, raiz->info.mat, raiz->info.turma, raiz->info.nota);
-    percorrer_arvores_preordem(raiz->dir);
-    percorrer_arvores_preordem(raiz->esq);
+    percorrer_arvores_preordem(raiz->dir, profundidade++);
+    percorrer_arvores_preordem(raiz->esq, profundidade++);
 }
 
-// parada no pai do elemento procurado (gdb) b percorrer_arvores_preordem if raiz != 0 && ((raiz->dir && raiz->dir->info.mat == 30 && raiz->dir->info.turma == 3) || (raiz->esq && raiz->esq->info.mat == 30 && raiz->esq->info.turma == 3))
+// parada no pai do elemento procurado (gdb) b percorrer_arvores_preordem if raiz != 0 && ((raiz->dir && raiz->dir->info.mat == 3 && raiz->dir->info.turma == 2) || (raiz->esq && raiz->esq->info.mat == 3 && raiz->esq->info.turma == 2))
 // elemento procurado (gdb) p raiz->dir->info.nome ou p raiz->esq->info.nome     
 // filho direito do elemento procurado (gdb) p raiz->dir->dir->info.nome ou p raiz->esq->dir->info.nome
 // filho esquerdo do elemento procurado (gdb) p raiz->dir->esq->info.nome ou p raiz->esq->esq->info.nome
