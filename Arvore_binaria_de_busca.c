@@ -98,8 +98,8 @@ void percorrer_arvores_preordem(struct Node *raiz, int profundidade){
         return;
     }
     printf("Nome: %s, Mat: %d, Turma: %d, Nota: %.2f\n", raiz->info.nome, raiz->info.mat, raiz->info.turma, raiz->info.nota);
-    percorrer_arvores_preordem(raiz->dir, profundidade++);
-    percorrer_arvores_preordem(raiz->esq, profundidade++);
+    percorrer_arvores_preordem(raiz->dir, ++profundidade);
+    percorrer_arvores_preordem(raiz->esq, ++profundidade);
 }
 
 // parada no pai do elemento procurado (gdb) b percorrer_arvores_preordem if raiz != 0 && ((raiz->dir && raiz->dir->info.mat == 3 && raiz->dir->info.turma == 2) || (raiz->esq && raiz->esq->info.mat == 3 && raiz->esq->info.turma == 2))
