@@ -102,7 +102,7 @@ void percorrer_arvores_preordem(struct Node *raiz){
     percorrer_arvores_preordem(raiz->esq);
 }
 
-// parada no pai do elemento procurado (gdb) b percorrer_arvores_preordem if raiz != 0 && ((raiz->dir && raiz->dir->info.mat == 3 && raiz->dir->info.turma == 2) || (raiz->esq && raiz->esq->info.mat == 3 && raiz->esq->info.turma == 2))
-// elemento procurado (gdb) p raiz->dir->info.nome    
-// filho direito do elemento procurado (gdb) p raiz->dir->dir->info.nome
-// filho esquerdo do elemento procurado (gdb) p raiz->dir->esq->info.nome
+// parada no pai do elemento procurado (gdb) b percorrer_arvores_preordem if raiz != 0 && ((raiz->dir && raiz->dir->info.mat == 30 && raiz->dir->info.turma == 3) || (raiz->esq && raiz->esq->info.mat == 30 && raiz->esq->info.turma == 3))
+// elemento procurado (gdb) p raiz->dir->info.nome ou p raiz->esq->info.nome     
+// filho direito do elemento procurado (gdb) p raiz->dir->dir->info.nome ou p raiz->esq->dir->info.nome
+// filho esquerdo do elemento procurado (gdb) p raiz->dir->esq->info.nome ou p raiz->esq->esq->info.nome
