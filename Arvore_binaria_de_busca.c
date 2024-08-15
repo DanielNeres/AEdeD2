@@ -21,6 +21,10 @@ struct Node* criarNode(struct Info info);
 int comparar(struct Info a, struct Info b);
 struct Node *inserir(struct Node *raiz, struct Info info);
 void percorrer_arvores_preordem(struct Node *raiz, int profundidade);
+void percorrer_arvores_inordem(struct Node *raiz, int profundidade, char *posicao);
+void percorrer_arvores_posordem(struct Node *raiz, int profundidade);
+int maior(int a, int b);
+int altura(struct Node *raiz);
 
 int main(){
 
@@ -55,7 +59,8 @@ int main(){
     for(index = 0; index < quantidade; index++){
         raiz = inserir(raiz, informacao[index]);
     }
-    percorrer_arvores_preordem(raiz, 0);
+    percorrer_arvores_inordem(raiz, 0, "raiz");
+    printf("%d\n", altura(raiz));
 }
 
 struct Info criarInfo(int mat, char *nome, int turma, float nota){
@@ -92,14 +97,41 @@ struct Node *inserir(struct Node *raiz, struct Info info){
     return raiz;
 }
 
-void percorrer_arvores_preordem(struct Node *raiz, int profundidade){
+int maior(int a, int b) { return a > b ? a : b; }
 
-    if(raiz == NULL){
+int altura(struct Node *raiz) {
+    if (raiz == 0) {
+        return -1;
+    } else {
+        int he = altura(raiz->esq);
+        int hd = altura(raiz->dir);
+        return 1 + maior(he, hd);
+    }
+}
+
+void percorrer_arvores_preordem(struct Node *raiz, int profundidade){
+    if (raiz != NULL){
+        printf("Nome: %s, Mat: %d, Turma: %d, Nota: %.2f\n", raiz->info.nome, raiz->info.mat, raiz->info.turma, raiz->info.nota);
+        percorrer_arvores_preordem(raiz->esq, ++profundidade);
+        percorrer_arvores_preordem(raiz->dir, ++profundidade);
+    }
+}
+
+void percorrer_arvores_posordem(struct Node *raiz, int profundidade){
+    if (raiz == NULL){
         return;
     }
+    percorrer_arvores_posordem(raiz->esq, ++profundidade);
+    percorrer_arvores_posordem(raiz->dir, ++profundidade);
     printf("Nome: %s, Mat: %d, Turma: %d, Nota: %.2f\n", raiz->info.nome, raiz->info.mat, raiz->info.turma, raiz->info.nota);
-    percorrer_arvores_preordem(raiz->dir, ++profundidade);
-    percorrer_arvores_preordem(raiz->esq, ++profundidade);
+}
+
+void percorrer_arvores_inordem(struct Node *raiz, int profundidade, char *posicao){
+    if (raiz != NULL){
+    percorrer_arvores_inordem(raiz->esq, ++profundidade, "esquerda");
+    printf("%s ==  Nome: %s, Mat: %d, Turma: %d, Nota: %.2f\n", posicao, raiz->info.nome, raiz->info.mat, raiz->info.turma, raiz->info.nota);
+    percorrer_arvores_inordem(raiz->dir, ++profundidade, "direita");
+    }
 }
 
 // parada no pai do elemento procurado (gdb) b percorrer_arvores_preordem if raiz != 0 && ((raiz->dir && raiz->dir->info.mat == 3 && raiz->dir->info.turma == 2) || (raiz->esq && raiz->esq->info.mat == 3 && raiz->esq->info.turma == 2))
